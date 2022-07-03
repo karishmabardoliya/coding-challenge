@@ -1,0 +1,64 @@
+<!-- Landing -->
+<section class="landing">
+  <div class="landing-text">
+    <h1>More than just shorter links</h1>
+    <p>
+      Build your brand’s recognition and get detailed insights on how your
+      links are performing.
+    </p>
+    <a href="#url-shorten-form" class="btn btn-lg">Get Started</a>
+  </div>
+  <div class="landing-image">
+    <img
+      src="assets/image/labimage.jpg"
+      alt="Working Illustration" />
+  </div>
+</section>
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <!-- Short URL Feature -->
+    <div class="url-shorten-feature">
+      <form class="url-shorten-form" id="url-shorten-form" [formGroup]="urlForm" (ngSubmit)="onSubmit()">
+        <div>
+          <input type="text" formControlName="url" class="url-input" placeholder="Shorten a link here..." autocomplete="off"
+          [ngClass]="{'has-error': submitted && f && f['url'] && f['url'].errors}" />
+          <p *ngIf="submitted && f && f['url'] && f['url'].errors">
+            <span class="alert" *ngIf="f['url'].errors['required']">URL is required</span>
+            <span class="alert" *ngIf="f['url'].errors['invalidURL']">URL is not valid</span>
+          </p>
+        </div>
+        <button *ngIf="!isApiCalled" type="submit" class="btn btn-lg tn-plus-icon">Shorten It!</button>
+        <button *ngIf="isApiCalled" type="submit" class="btn btn-lg tn-plus-icon">
+            <i class="fa fa-circle-o-notch fa-spin"></i> Generating...
+        </button>
+      </form>
+      <div class="url-shorten-results">
+            <div class="url-shorten-result" *ngFor="let data of allURLs; let i=index">
+              <div class="old-url" id="oldurl + {{i}}">
+                <p><a [href]="data.original_link" target="_blank">{{data.original_link}}</a></p>
+              </div>
+              <div class="new-url" id="newurl + {{i}}">
+                <p><a [href]="data.full_short_link" target="_blank">{{data.full_short_link}}</a></p>
+                <div class="options">
+                  <button type="button" class="copy-new-url btn btn-sm scale-effect" (click)="copyToClipBoard(data.full_short_link)">
+                    copy
+                  </button>
+
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+    <!-- Advanced Features -->
+    <div class="more-features">
+      <div class="section-header">
+        <h2>Advanced Statistics</h2>
+        <p>
+          Track how your links are performing across the web with our
+          advanced statistics dashboard.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
